@@ -29,27 +29,6 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    def do_create(self, class_name):
-        """Create an object of the class_name class
-        """
-
-        obj = None
-        if class_name:
-            match(class_name):
-                case "BaseModel":
-                    obj = BaseModel()
-                case _:
-                    print("** class doesn't exist **")
-        else:
-            print("** class name missing **")
-            return True
-        if obj is not None:
-            obj.save()
-            id = "{}".format(obj.id)
-            print(id)
-        else:
-            return True
-
-
+    
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
