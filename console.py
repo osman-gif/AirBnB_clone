@@ -9,8 +9,7 @@ from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    The HBNBCommand class inherits the Cmd class from the cmd module,
+    """The HBNBCommand class inherits the Cmd class from the cmd module,
     The class 'HBNBCommand' is used for managing the objects of the AirBnb
     project
     """
@@ -18,16 +17,22 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
 
     def do_quit(self, arg):
-        """ Quit command to exit the program """
+        """Quit command to exit the program
+        """
 
         return True
 
     def do_EOF(self, arg):
-        """EOF signal to exit the program"""
+        """EOF signal to exit the program
+        """
+        
+        print()
         return True
 
     def do_create(self, class_name):
-        """ Create an object of the class_name class """
+        """Create an object of the class_name class
+        """
+
         obj = None
         if class_name:
             match(class_name):
