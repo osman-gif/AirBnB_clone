@@ -27,6 +27,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, class_name):
+        """ Create an object of the class_name class """
         obj = None
         if class_name:
             match(class_name):
