@@ -38,8 +38,9 @@ class HBNBCommand(cmd.Cmd):
 
         result = self.instance_exist(class_name, id)
         if result == 'yes':
-            if attribute in FileStorage().
-            all()[f"{class_name}.{id}"].to_dict().values():
+            if attribute in FileStorage(
+                
+            ).all()[f"{class_name}.{id}"].to_dict().values():
                 return 'yes'
             else:
                 return 'no'
