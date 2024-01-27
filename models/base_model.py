@@ -7,7 +7,6 @@ from datetime import datetime
 import uuid
 import models
 
-
 class BaseModel:
     """
     This class represent the parent class for all the other classes
@@ -17,7 +16,6 @@ class BaseModel:
         """
         This method instantiate the class
         """
-
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
