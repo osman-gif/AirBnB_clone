@@ -1,6 +1,6 @@
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
-from console import HBNBCommand
+import console
 
 def execute_default_command(class_name, command):
         """
@@ -14,7 +14,7 @@ def execute_default_command(class_name, command):
 
         if class_name in classes:
                 if command == "all()":
-                    HBNBCommand.do_all(class_name)
+                    console.NBCommand.do_all(class_name)
                 elif command == "count()":
                     print(FileStorage().all_class_count(class_name))
                 elif "show" in command:
@@ -42,7 +42,7 @@ def execute_default_command(class_name, command):
 
         return
 
-def class_exist(self, class_name):
+def class_exist(class_name):
         """checks if a class exists, if so then return 'yes'
         else 'no' """
 
@@ -62,11 +62,11 @@ def class_exist(self, class_name):
             case _:
                 return 'no'
 
-def instance_exist(self, class_name, id):
+def instance_exist(class_name, id):
         """Checks if an instance exists, if so return 'yes'
         else 'no'"""
 
-        result = self.class_exist(class_name)
+        result = class_exist(class_name)
         if result == 'yes':
             if f"{class_name}.{id}" in FileStorage().all().keys():
                 return 'yes'
