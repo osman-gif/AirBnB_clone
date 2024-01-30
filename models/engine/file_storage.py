@@ -5,7 +5,6 @@ This module define a class that serializes, deserializes object
 
 import json
 import os
-#import models
 from models import base_model
 from models import user
 from models import city
@@ -13,6 +12,7 @@ from models import amenity
 from models import state
 from models import review
 from models import place
+
 
 class FileStorage:
     """
@@ -78,17 +78,17 @@ class FileStorage:
                             case 'Place':
                                 des_obj = place.Place(**value)
 
-
-                        #des_obj = base_model.BaseModel(**value)
                         self.__objects[key] = des_obj
 
                 except Exception:
                     pass
+
     def all_class_count(self, class_name):
         """
         This function returns the number of the instances of the
         class_name
         """
+
         all = self.__objects
         count = 0
 
@@ -109,7 +109,7 @@ class FileStorage:
             if id == key.split('.')[1]:
                 id_exist = True
                 my_key = key
-        if id_exist == True:
+        if id_exist is True:
             print(key)
             if id in FileStorage().all().keys():
                 print("ues")

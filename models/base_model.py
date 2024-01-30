@@ -7,6 +7,7 @@ from datetime import datetime
 import uuid
 import models
 
+
 class BaseModel:
     """
     This class represent the parent class for all the other classes
