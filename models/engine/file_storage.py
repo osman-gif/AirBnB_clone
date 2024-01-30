@@ -56,7 +56,6 @@ class FileStorage:
         (only if the JSON file (__file_path) exists
         """
 
-
         if os.path.exists(FileStorage.__file_path):
             with open(self.__file_path, 'r', encoding='utf-8') as file:
                 try:
