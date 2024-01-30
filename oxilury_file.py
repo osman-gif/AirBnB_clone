@@ -14,7 +14,7 @@ def execute_default_command(class_name, command):
 
         if class_name in classes:
                 if command == "all()":
-                    console.NBCommand.do_all(class_name)
+                    console.HBNBCommand.do_all(class_name)
                 elif command == "count()":
                     print(FileStorage().all_class_count(class_name))
                 elif "show" in command:
