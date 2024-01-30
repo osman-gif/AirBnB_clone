@@ -46,7 +46,7 @@ def class_exist(class_name):
         """checks if a class exists, if so then return 'yes'
         else 'no' """
 
-        match(class_name):
+        match class_name:
             case "BaseModel":
                 return 'yes'
             case "User":
