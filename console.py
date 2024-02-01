@@ -4,8 +4,6 @@ This module provide command interpreter AKA the console program,
 from which you can control the AirBNB project: create and destroy an
 object and so on
 """
-
-
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -71,7 +69,6 @@ class HBNBCommand(cmd.Cmd):
             self.emptyline()
 
     def instance_exist(self, class_name, obj_id):
-        """Checks if an instance exists"""
 
         _class = oxilury_file.class_exist(class_name)
         _instance = oxilury_file.instance_exist(class_name, obj_id)
