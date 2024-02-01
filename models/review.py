@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ This is review module """
 from models.base_model import BaseModel
 

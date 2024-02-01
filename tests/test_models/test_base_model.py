@@ -1,4 +1,7 @@
-
+#!/usr/bin/python3
+"""
+This is the testing module
+"""
 import unittest
 from models.base_model import BaseModel
 from datetime import datetime
@@ -8,30 +11,51 @@ import os
 
 
 class TestBaseModel(unittest.TestCase):
+    """
+    This class tests the BaseModel class
+    """
 
     def setUp(self):
+        """Set the variables to be used frequently
+        """
         self.base_model = BaseModel()
 
     def tearDown(self):
+        """
+        Delete set variable set by SetUp
+        """
         del self.base_model
 
     def test_init(self):
+        """
+        tests the init function
+        """
         self.assertIsNotNone(self.base_model.id)
         self.assertIsInstance(self.base_model.created_at, datetime)
         self.assertIsInstance(self.base_model.updated_at, datetime)
 
     def test_str(self):
+        """
+        Tests the str function
+        """
         cls = 'BaseModel'
         id = self.base_model.id
         expected_str = f"[{cls}] ({id}) {self.base_model.__dict__}"
         self.assertEqual(str(self.base_model), expected_str)
 
     def test_save(self):
+        """
+        Tests the save function
+        """
+
         with patch('models.storage.save') as mock_save:
             self.base_model.save()
             mock_save.assert_called_once()
 
     def test_to_dict(self):
+        """
+        Tests the dict function
+        """
         expected_dict = {
             'id': self.base_model.id,
             'created_at': self.base_model.created_at.isoformat(),
@@ -41,6 +65,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertDictEqual(self.base_model.to_dict(), expected_dict)
 
     def test_save_and_reload(self):
+        """
+        Tests the save and reload functions
+        """
         # Save the BaseModel to a temporary file
         temp_filename = 'temp.json'
         with patch('models.storage._FileStorage__file_path', temp_filename):
