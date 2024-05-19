@@ -2,7 +2,7 @@
 """ This is the AirBnbClone console project, In this project I'am creating
 a command_line interpreter for the AirBnbClone project """
 
-import Cmd
+import cmd
 import re
 import models.base_model as base_model
 from models.user import User
@@ -15,7 +15,7 @@ from models.state import State
 from models.Review import Review
 
 
-class HBNBCommand(Cmd.cmd):
+class HBNBCommand(cmd.Cmd):
 
     hbnb_objects = models.storage.all()
     hbnb_classess = ['BaseModel', 'User',
