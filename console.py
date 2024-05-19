@@ -247,43 +247,43 @@ class HBNBCommand(cmd.Cmd):
         class_destroy_id = re.match(r'^.+\.destroy\(.+\)$', line)
         count_class_objects = re.match(r'^.+\.count\(\)', line)
 
-        fun_cmd_dict = {cmd_update: self.update_base_on_class_name,
-                        all_classes: self.print_specific_class,
-                        class_show: self.show_or_destroy,
-                        count_class_objects: self.count,
-                        class_destroy_id: self.show_or_destroy,
-                        show_without_id: print}
+        # fun_cmd_dict = {cmd_update: self.update_base_on_class_name,
+        #                 all_classes: self.print_specific_class,
+        #                 class_show: self.show_or_destroy,
+        #                 count_class_objects: self.count,
+        #                 class_destroy_id: self.show_or_destroy,
+        #                 show_without_id: print}
 
-        for cmd, fun in fun_cmd_dict.items():
-            if cmd:
-                fun(line)
-                return
+        # for cmd_, fun in fun_cmd_dict.items():
+        #     if cmd_:
+        #         fun(line)
+        #         return
 
-        # if cmd_update:
-        #     self.update_base_on_class_name(line)
-        #     return
+        if cmd_update:
+            self.update_base_on_class_name(line)
+            return
 
-        # if count_class_objects:
-        #     print(self.count(line))
-        #     return
-        # if show_without_id:
-        #     print(show_without_id)
+        if count_class_objects:
+            print(self.count(line))
+            return
+        if show_without_id:
+            print(show_without_id)
 
-        # if all_classes:
-        #     self.print_specific_class(line, '.')
-        #     return
-        # elif class_show or class_destroy_id:
-        #     self.show_or_destroy(line)
-        #     return
-        # elif re.match(r'^show()', line):
-        #     print('** class missing **')
-        #     return
-        # elif re.match(r'^.+\.show\(\)$',
-        #               line) or re.match(r'^.+\.destroy\(\)$', line):
-        #     print("** instance id missing **")
-        #     return
+        if all_classes:
+            self.print_specific_class(line, '.')
+            return
+        elif class_show or class_destroy_id:
+            self.show_or_destroy(line)
+            return
+        elif re.match(r'^show()', line):
+            print('** class missing **')
+            return
+        elif re.match(r'^.+\.show\(\)$',
+                      line) or re.match(r'^.+\.destroy\(\)$', line):
+            print("** instance id missing **")
+            return
 
-        return Cmd.onecmd(self, line)
+        return cmd.Cmd.onecmd(self, line)
 
     def validate_update_args(self, line):
         """# Usage: <class name>.update(<id>, <attr name>, <attr value>)"""
