@@ -192,7 +192,6 @@ class HBNBCommand(Cmd):
         else:
             print("** class doesn't exist **")
         print(my_list)
-        
 
     def show_or_destroy(self, line):
 
@@ -214,17 +213,16 @@ class HBNBCommand(Cmd):
                     return
 
                 elif fun == 'destroy':
-                    #if id in k:
+                    # if id in k:
                     temp_list = self.hbnb_objects.copy()
                     del temp_list['{}.{}'.format(c_name, id)]
                     self.hbnb_objects = temp_list
                     print("destroy ====")
                     return
-                   
 
         print("** no instance found **")
         return
-    
+
     def count(self, line):
         c_name = line.split('.')
 
@@ -232,28 +230,28 @@ class HBNBCommand(Cmd):
         for k, v in self.hbnb_objects.items():
             if c_name[0] in k:
                 count = count + 1
-        
+
         return count
 
     def evaluate_update_cmd(self, line):
         pass
 
     def onecmd(self, line):
-        
+
         cmd_update = re.match(r'^.+\.update\(.*\)', line)
         all_classes = re.match(r'^.+\.all\(\)$', line)
         class_show = re.match(r'^.+\.show\(.*\)$', line)
         show_without_id = re.findall(r'^.+\.show\(\)', line)
         class_destroy_id = re.match(r'^.+\.destroy\(.+\)$', line)
         count_class_objects = re.match(r'^.+\.count\(\)', line)
-        
+
         fun_cmd_dict = {cmd_update: self.update_base_on_class_name,
                         all_classes: self.print_specific_class,
                         class_show: self.show_or_destroy,
                         count_class_objects: self.count,
                         class_destroy_id: self.show_or_destroy,
-                        show_without_id:print}
-        
+                        show_without_id: print}
+
         for cmd, fun in fun_cmd_dict.items():
             if cmd:
                 fun(line)
@@ -287,10 +285,10 @@ class HBNBCommand(Cmd):
 
     def validate_update_args(self, line):
         # Usage: <class name>.update(<id>, <attr name>, <attr value>)
-        c_name, update  = line.split('.')# <class name>, update(<id>, <attr name>, <attr value>)
-        update, args = update.split('(')# update, <id>, <attr name>, <attr value>)
-        args = args.split(',')# [<id>, <attr name>, <attr value]
-        
+        c_name, update = line.split('.')
+        update, args = update.split('(')
+        args = args.split(',')
+
         if args == [')']:
             print("** instance id missing **")
             return
@@ -313,31 +311,28 @@ class HBNBCommand(Cmd):
                 args[count] = arg.partition('"')[2].removesuffix('"')
             return args
         return
-        
-        
+
     def update_base_on_class_name(self,  line):
 
-            c_name = line.split('.')[0]
-            args =self.validate_update_args(line)
+        c_name = line.split('.')[0]
+        args = self.validate_update_args(line)
 
-            #print('args', args)
-            if args:
-                c_id, att_name, att_value  = args
-                object_update = self.hbnb_objects['{}.{}'.format(c_name,
-                                                                c_id)]
-                for type, key in self.types_dict.items():
-                    if att_name in key:
-                        setattr(object_update,  att_name, type(att_value))
-                    else:
-                        setattr(object_update, att_name, str(att_value))
+        # print('args', args)
+        if args:
+            c_id, att_name, att_value = args
+            object_update = self.hbnb_objects['{}.{}'.format(c_name, c_id)]
+            for type, key in self.types_dict.items():
+                if att_name in key:
+                    setattr(object_update,  att_name, type(att_value))
+                else:
+                    setattr(object_update, att_name, str(att_value))
 
-                models.storage.save()
-                print(object_update)
+            models.storage.save()
+            print(object_update)
 
-                return
+            return
 
-
-        #pass
+        # pass
     # _____________________________________________________________________
     def do_update(self, line):
         # Usage: update <class name> <id> <attribute name> "<attribute value>"
@@ -347,7 +342,7 @@ class HBNBCommand(Cmd):
         update <class name> <id> <attribute name> "<attribute value>
         """
         if self.assist_udpate(line) is False:
-            return  
+            return
         c_name, c_id, att_name, att_value = line.split(' ')
         object_update = self.hbnb_objects['{}.{}'.format(c_name,
                                                          c_id)]
