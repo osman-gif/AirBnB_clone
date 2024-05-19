@@ -2,7 +2,13 @@
 
 import json
 import os
-from base_model import BaseModel
+from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.Review import Review
 
 
 class FileStorage():
@@ -49,6 +55,7 @@ class FileStorage():
         for k, v in self.__objects.items():
             new_dict[k] = v.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as file:
+            # print(new_dict)
             json.dump(new_dict, file)
 
     def reload(self):
@@ -62,4 +69,18 @@ class FileStorage():
             with open(self.__file_path, "r", encoding='utf-8') as file:
                 new_dict = json.load(file)
             for k, v in new_dict.items():
-                self.__objects[k] = BaseModel(**v)
+                match k.split('.')[0]:
+                    case 'User':
+                        self.__objects[k] = User(**v)
+                    case 'BaseModel':
+                        self.__objects[k] = BaseModel(**v)
+                    case 'Place':
+                        self.__objects[k] = Place(**v)
+                    case 'Amenity':
+                        self.__objects[k] = Amenity(**v)
+                    case 'Review':
+                        self.__objects[k] = Review(**v)
+                    case 'City':
+                        self.__objects[k] = City(**v)
+                    case 'State':
+                        self.__objects[k] = State(**v)

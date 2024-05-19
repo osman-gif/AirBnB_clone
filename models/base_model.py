@@ -42,11 +42,11 @@ class BaseModel():
 
     def to_dict(self):
         new_dict = {}
-        class_dict = {'id': self.id, 'created_at': self.created_at,
-                      'updated_at': self.updated_at}.items()
+        class_dict = {'id': self.id, 'created_at': str(self.created_at),
+                      'updated_at': str(self.updated_at)}
         for key, value in self.__dict__.items():
             new_dict[key] = value
-        for key, value in class_dict:
+        for key, value in class_dict.items():
             new_dict[key] = value
         new_dict['__class__'] = self.__class__.__name__
         return new_dict
