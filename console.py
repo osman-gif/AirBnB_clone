@@ -183,6 +183,7 @@ class HBNBCommand(Cmd.cmd):
     # _____________________________________________________________________
 
     def print_specific_class(self, line):
+        """prints specific class objects"""
         c_name, all = line.split('.')
         my_list = []
         if c_name in self.hbnb_classess:
@@ -194,7 +195,7 @@ class HBNBCommand(Cmd.cmd):
         print(my_list)
 
     def show_or_destroy(self, line):
-
+        """ Destroys and object"""
         c_name, fun_id = line.split('.')
         if self.class_exist(c_name, self.hbnb_classess) is False:
             return
@@ -224,6 +225,7 @@ class HBNBCommand(Cmd.cmd):
         return
 
     def count(self, line):
+        """counts objects"""
         c_name = line.split('.')
 
         count = 0
@@ -237,7 +239,7 @@ class HBNBCommand(Cmd.cmd):
         pass
 
     def onecmd(self, line):
-
+        """onecmo function"""
         cmd_update = re.match(r'^.+\.update\(.*\)', line)
         all_classes = re.match(r'^.+\.all\(\)$', line)
         class_show = re.match(r'^.+\.show\(.*\)$', line)
@@ -284,7 +286,7 @@ class HBNBCommand(Cmd.cmd):
         return Cmd.onecmd(self, line)
 
     def validate_update_args(self, line):
-        # Usage: <class name>.update(<id>, <attr name>, <attr value>)
+        """# Usage: <class name>.update(<id>, <attr name>, <attr value>)"""
         c_name, update = line.split('.')
         update, args = update.split('(')
         args = args.split(',')
@@ -313,7 +315,7 @@ class HBNBCommand(Cmd.cmd):
         return
 
     def update_base_on_class_name(self,  line):
-
+        """update an object"""
         c_name = line.split('.')[0]
         args = self.validate_update_args(line)
 
@@ -335,7 +337,6 @@ class HBNBCommand(Cmd.cmd):
         # pass
     # _____________________________________________________________________
     def do_update(self, line):
-        # Usage: update <class name> <id> <attribute name> "<attribute value>"
         """Updates an existing instance's attribute or add a new attribute,
         instance id is Identified with <class name>.<object id>
         Usage:
