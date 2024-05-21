@@ -41,5 +41,6 @@ class TestFileFileStorage(TestCase):
         """test new"""
         self.storage.new(self.base_model)
 
-    if __name__ == "__main__":
-        unittest.main
+
+if __name__ == "__main__":
+    unittest.main()

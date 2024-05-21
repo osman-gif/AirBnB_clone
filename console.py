@@ -13,6 +13,8 @@ from models.city import City
 from models.place import Place
 from models.state import State
 from models.Review import Review
+import update
+import show
 
 
 class HBNBCommand(cmd.Cmd):
@@ -74,27 +76,7 @@ class HBNBCommand(cmd.Cmd):
                 print(my_classs.id)
 
     def do_show(self, line):
-        """ Prints the string representation of an object
-        based on class name and object id
-        Usage:
-            show <class name> <object id>"""
-
-        # check class name exist
-        if line.split(' ') == ['']:
-            print('** class name missing **')
-            return
-        if len(line.split(' ')) == 1:
-            print('** instance id missing **')
-            return
-
-        c_name, o_id = line.split(' ')
-
-        if self.class_exist(c_name, self.hbnb_classess) is False:
-            return
-        elif '{}.{}'.format(c_name, o_id) in self.hbnb_objects.keys():
-            print(self.hbnb_objects['{}.{}'.format(c_name, o_id)])
-        else:
-            print('** no instance found **')
+        show.do_show(self, line)
 
     def do_destroy(self, line):
         """ Deletes  an object
@@ -146,39 +128,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj_list)
 
     def assist_udpate(self, line):
-        """ This function checks if class exist, and if it is a valid class
-        same goes for the id, attribute name and value of attribute"""
-        update_attr = line.split(' ')
-        update_attr_len = len(update_attr)
-
-        # _____________class__________
-        if update_attr == ['']:
-            print('** class name missing **')
-            return False
-        else:
-            if update_attr[0] not in self.hbnb_classess:
-                print("** class doesn't exist **")
-                return False
-
-        # ________________id_____________
-        if update_attr_len == 1:
-            print('** instance id missing **')
-            return False
-
-        elif '{}.{}'.format(update_attr[0],
-                            update_attr[1]) not in self.hbnb_objects.keys():
-            print("** no instance found **")
-            return False
-
-        # ______________name___________
-        if update_attr_len == 2:
-            print('** attribute name missing **')
-            return False
-
-        # _________________value___________
-        if update_attr_len == 3:
-            print('** value missing **')
-            return False
+        update.assist_udpate(line)
 
     # _____________________________________________________________________
 
@@ -195,34 +145,10 @@ class HBNBCommand(cmd.Cmd):
         print(my_list)
 
     def show_or_destroy(self, line):
-        """ Destroys and object"""
-        c_name, fun_id = line.split('.')
-        if self.class_exist(c_name, self.hbnb_classess) is False:
-            return
+        show.show_or_destroy(self, line)
 
-        fun_id = fun_id.split('(')
-        id = fun_id[1].removesuffix(')')
-        fun = fun_id[0]
-
-        id = id.partition('"')[2].removesuffix('"')
-
-        for k, v in self.hbnb_objects.items():
-            if '{}.{}'.format(c_name, id) == k:
-                if fun == 'show':
-                    print("show ====")
-                    print(v)
-                    return
-
-                elif fun == 'destroy':
-                    # if id in k:
-                    temp_list = self.hbnb_objects.copy()
-                    del temp_list['{}.{}'.format(c_name, id)]
-                    self.hbnb_objects = temp_list
-                    print("destroy ====")
-                    return
-
-        print("** no instance found **")
-        return
+        # print("** no instance found **")
+        # return
 
     def count(self, line):
         """counts objects"""
@@ -247,20 +173,8 @@ class HBNBCommand(cmd.Cmd):
         class_destroy_id = re.match(r'^.+\.destroy\(.+\)$', line)
         count_class_objects = re.match(r'^.+\.count\(\)', line)
 
-        # fun_cmd_dict = {cmd_update: self.update_base_on_class_name,
-        #                 all_classes: self.print_specific_class,
-        #                 class_show: self.show_or_destroy,
-        #                 count_class_objects: self.count,
-        #                 class_destroy_id: self.show_or_destroy,
-        #                 show_without_id: print}
-
-        # for cmd_, fun in fun_cmd_dict.items():
-        #     if cmd_:
-        #         fun(line)
-        #         return
-
         if cmd_update:
-            self.update_base_on_class_name(line)
+            update.update_base_on_class_name(line)
             return
 
         if count_class_objects:
@@ -270,13 +184,13 @@ class HBNBCommand(cmd.Cmd):
             print(show_without_id)
 
         if all_classes:
-            self.print_specific_class(line, '.')
+            self.print_specific_class(line)
             return
         elif class_show or class_destroy_id:
             self.show_or_destroy(line)
             return
-        elif re.match(r'^show()', line):
-            print('** class missing **')
+        elif re.match(r'^show()$', line):
+            print('** class name missing **')
             return
         elif re.match(r'^.+\.show\(\)$',
                       line) or re.match(r'^.+\.destroy\(\)$', line):
@@ -285,77 +199,15 @@ class HBNBCommand(cmd.Cmd):
 
         return cmd.Cmd.onecmd(self, line)
 
+# ________________________________________________________________________________________________
     def validate_update_args(self, line):
-        """# Usage: <class name>.update(<id>, <attr name>, <attr value>)"""
-        c_name, update = line.split('.')
-        update, args = update.split('(')
-        args = args.split(',')
-
-        if args == [')']:
-            print("** instance id missing **")
-            return
-        if len(args) == 1:
-            id = args[0].partition('"')[2].removesuffix('"')
-            if id in self.hbnb_objects.keys():
-                pass
-            else:
-                print("** no instance found **")
-                return
-            print("** attribute name missing **")
-            return
-        if len(args) == 2:
-            print("** attribue value missing **")
-            return
-        if len(args) == 3:
-            args[2] = args[2].removesuffix(')')
-
-            for count, arg in enumerate(args):
-                args[count] = arg.partition('"')[2].removesuffix('"')
-            return args
-        return
+        update.validate_update_args(self, line)
 
     def update_base_on_class_name(self,  line):
-        """update an object"""
-        c_name = line.split('.')[0]
-        args = self.validate_update_args(line)
+        update.update_base_on_class_name(self, line)
 
-        # print('args', args)
-        if args:
-            c_id, att_name, att_value = args
-            object_update = self.hbnb_objects['{}.{}'.format(c_name, c_id)]
-            for type, key in self.types_dict.items():
-                if att_name in key:
-                    setattr(object_update,  att_name, type(att_value))
-                else:
-                    setattr(object_update, att_name, str(att_value))
-
-            models.storage.save()
-            print(object_update)
-
-            return
-
-        # pass
-    # _____________________________________________________________________
     def do_update(self, line):
-        """Updates an existing instance's attribute or add a new attribute,
-        instance id is Identified with <class name>.<object id>
-        Usage:
-        update <class name> <id> <attribute name> "<attribute value>
-        """
-        if self.assist_udpate(line) is False:
-            return
-        c_name, c_id, att_name, att_value = line.split(' ')
-        object_update = self.hbnb_objects['{}.{}'.format(c_name,
-                                                         c_id)]
-        for type, key in self.types_dict.items():
-            if att_name in key:
-                setattr(object_update,  att_name, type(att_value))
-            else:
-                setattr(object_update, att_name,
-                        str(att_value).partition('"')[2].removesuffix('"'))
-
-        models.storage.save()
-        print(object_update)
+        update.do_update(self, line)
 
 
 if __name__ == '__main__':

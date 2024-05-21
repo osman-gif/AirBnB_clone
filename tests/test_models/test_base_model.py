@@ -5,6 +5,7 @@ This file tests the functionality of the base_model module
 from unittest import TestCase
 from models.base_model import BaseModel
 from datetime import datetime
+import unittest
 
 
 class TestBaseModel(TestCase):
@@ -54,6 +55,10 @@ class TestBaseModel(TestCase):
 
     def test_object_recreation(self):
         """test object_recreation"""
-        print(self.baseModel_dict, '\n', self.recreated_base_model_dict)
+        # print(self.baseModel_dict, '\n', self.recreated_base_model_dict)
         self.assertEqual(self.baseModel_dict, self.recreated_base_model_dict)
         self.assertIsNot(self.baseModel_dict, self.recreated_base_model_dict)
+
+
+if __name__ == "__main__":
+    unittest.main()
