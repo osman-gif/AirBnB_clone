@@ -1,0 +1,15 @@
+header {
+	background-color: transparent;
+	height: 70px;
+}
+header div#icon_text{
+	/*	display: flex;*/
+	border-bottom: 2px solid gray; 
+}
+header #icon_text {
+	/*	display: flex;*/
+	background-image: url("../images/logo.png");
+	background-repeat: no-repeat;
+	/*	background-color: transparent;*/
+	height: 70px;
+}
