@@ -12,7 +12,7 @@ from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.state import State
-from models.Review import Review
+from models.review import Review
 import update
 import show
 
@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         if self.class_exist(line, self.hbnb_classess) is False:
             return
         for k, v in self.classes_dict.items():
-
+            
             if line == k:
                 my_classs = v()
                 models.storage.save()
